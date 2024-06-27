@@ -1,1 +1,2 @@
-export * from "./sample.entity";
+export * from "./account.entity";
+export * from "./account-info.entity";

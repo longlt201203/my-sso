@@ -1,0 +1,16 @@
+version: "3.9"
+name: my-sso
+services:
+  db:
+    container_name: sso_db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin@123
+      MYSQL_DATABASE: sso
+    ports:
+      - 3306:3306
+    volumes:
+      - sso_db_vol:/var/lib/mysql
+
+volumes:
+  sso_db_vol:
