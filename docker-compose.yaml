@@ -1,6 +1,18 @@
 version: "3.9"
 name: my-sso
 services:
+  cache:
+    container_name: sso_cache
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  cache_management:
+    container_name: sso_cache_management
+    image: redis/redisinsight:latest
+    ports:
+      - 5540:5540
+
   db:
     container_name: sso_db
     image: mysql:8.0

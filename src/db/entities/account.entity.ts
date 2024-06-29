@@ -3,9 +3,12 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinColumn,
+	OneToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import { AccountInfo } from "./account-info.entity";
 
 @Entity()
 export class Account {
@@ -29,4 +32,8 @@ export class Account {
 
 	@UpdateDateColumn()
 	updatedAt: Date;
+
+	@OneToOne(() => AccountInfo, { cascade: true })
+	@JoinColumn()
+	info: AccountInfo;
 }

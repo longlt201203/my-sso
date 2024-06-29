@@ -34,8 +34,40 @@ export class AccountService implements OnModuleInit {
 			password: await this.securityService.hashPassword(password),
 			email: Env.ADMIN_EMAIL,
 			role: AccountRoleEnum.ADMIN,
+			info: {
+				fname: "admin",
+				lname: "admin",
+				dob: new Date(),
+				phone: "string",
+			},
 		});
 		await this.accountRepository.save(account);
 		console.log("Admin account created.");
+	}
+
+	async getByUsernameAndPassword(username: string, password: string) {
+		const account = await this.accountRepository.findOne({
+			where: {
+				username: username,
+			},
+		});
+		if (!account) return null;
+		const isPasswordValid = await this.securityService.comparePassword(
+			password,
+			account.password,
+		);
+		if (!isPasswordValid) return null;
+		return account;
+	}
+
+	getOneById(id: string) {
+		return this.accountRepository.findOne({
+			where: {
+				id: id,
+			},
+			relations: {
+				info: true,
+			},
+		});
 	}
 }
